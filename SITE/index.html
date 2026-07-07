@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUMMER RUSH — 7 jours de stream, 12h par jour</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07090c;--panel:#10141a;--panel-2:#161b23;--rail:#262c34;
+    --steel:#8d98a5;--steel-light:#d7dde2;--text:#eef1f3;--muted:#8b95a1;
+    --gold:#e8b84b;--ember:#ff6a3d;--ice:#4fd8ff;--danger:#ff4d4d;--ok:#22c55e;
+    --radius:14px;--border:1px solid rgba(255,255,255,0.07);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text); font-family:'Inter',sans-serif; min-height:100vh;
+    padding:28px 20px 80px; margin:0; overflow-x:hidden;
+  }
+  /* ===== fond animé immersif ===== */
+  .bg-fx{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;}
+  .bg-fx .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:drift 22s ease-in-out infinite alternate;}
+  .bg-fx .b1{width:60vw;height:60vw;left:-15vw;top:-25vw;background:radial-gradient(circle,rgba(255,106,61,.16),transparent 65%);}
+  .bg-fx .b2{width:50vw;height:50vw;right:-15vw;top:-10vw;background:radial-gradient(circle,rgba(79,216,255,.12),transparent 65%);animation-delay:-8s;}
+  .bg-fx .b3{width:45vw;height:45vw;left:30vw;bottom:-25vw;background:radial-gradient(circle,rgba(232,184,75,.09),transparent 65%);animation-delay:-15s;}
+  @keyframes drift{from{transform:translate(0,0) scale(1);}to{transform:translate(6vw,4vh) scale(1.15);}}
+  .bg-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 30%,transparent 80%);
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 30%,transparent 80%);
+  }
+  .wrap{max-width:1340px;margin:0 auto;}
+
+  /* ===== topbar ===== */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:22px;margin-bottom:26px;border-bottom:var(--border);}
+  .brand{display:flex;align-items:center;gap:14px;}
+  .plate{background:linear-gradient(135deg,var(--ember),#ff8f3d);color:#0a0c0f;padding:8px 14px;font-weight:700;border-radius:8px;font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:1px;box-shadow:0 0 24px rgba(255,106,61,.45);animation:platePulse 3s ease-in-out infinite;}
+  @keyframes platePulse{0%,100%{box-shadow:0 0 18px rgba(255,106,61,.35);}50%{box-shadow:0 0 34px rgba(255,106,61,.6);}}
+  .brand-text small{color:var(--muted);font-size:12px;letter-spacing:2px;font-weight:600;}
+
+  /* ===== bandeau derniers subs ===== */
+  .sub-ticker{display:flex;align-items:center;gap:0;background:var(--panel);border:var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden;}
+  .ticker-label{flex-shrink:0;background:linear-gradient(135deg,#6441a5,#7d5bbe);color:#fff;font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;padding:10px 16px;white-space:nowrap;}
+  .ticker-viewport{flex:1;overflow:hidden;position:relative;}
+  .ticker-viewport::before,.ticker-viewport::after{content:"";position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none;}
+  .ticker-viewport::before{left:0;background:linear-gradient(90deg,var(--panel),transparent);}
+  .ticker-viewport::after{right:0;background:linear-gradient(-90deg,var(--panel),transparent);}
+  .ticker-track{display:flex;gap:36px;white-space:nowrap;width:max-content;padding:10px 0;animation:tickerScroll 40s linear infinite;}
+  .sub-ticker:hover .ticker-track{animation-play-state:paused;}
+  @keyframes tickerScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .ticker-item{display:inline-flex;align-items:center;gap:7px;font-size:12px;color:var(--steel-light);}
+  .ticker-item b{color:var(--ice);font-weight:600;}
+  .ticker-item .t-months{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:11px;}
+  .ticker-item .t-gift{color:#c39bff;}
+
+  /* ===== case description projet ===== */
+  .about-box{background:var(--panel);border:var(--border);border-left:3px solid var(--gold);border-radius:10px;padding:12px 18px;margin-bottom:20px;}
+  .about-box p{margin:0;font-size:13px;color:var(--steel-light);line-height:1.6;}
+  .is-admin .about-box{cursor:pointer;}
+  .is-admin .about-box:hover{border-color:rgba(232,184,75,.5);}
+  .about-box .edit-hint{margin-top:4px;}
+  .live-pill{display:flex;align-items:center;gap:8px;background:rgba(255,77,77,0.1);color:var(--danger);padding:7px 14px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid rgba(255,77,77,0.25);letter-spacing:.5px;}
+  .live-dot{width:8px;height:8px;background:var(--danger);border-radius:50%;display:inline-block;animation:pulse 1.5s infinite;box-shadow:0 0 8px var(--danger);}
+
+  /* ===== countdown ===== */
+  .countdown-card{position:relative;background:var(--panel);border:var(--border);border-radius:var(--radius);padding:26px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px;overflow:hidden;}
+  .countdown-card::before{content:"";position:absolute;inset:-2px;background:linear-gradient(120deg,transparent 30%,rgba(79,216,255,.18) 50%,transparent 70%);animation:sheen 6s linear infinite;pointer-events:none;}
+  @keyframes sheen{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+  .countdown-label{font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;color:var(--steel);letter-spacing:2px;}
+  .countdown-target{font-size:13px;color:var(--muted);margin-top:6px;}
+  .countdown-digits{display:flex;gap:14px;}
+  .digit-block{background:var(--panel-2);border:var(--border);border-radius:10px;padding:12px 14px;min-width:82px;text-align:center;position:relative;transition:transform .2s;}
+  .digit-block:hover{transform:translateY(-3px);}
+  .digit-block .num{font-family:'JetBrains Mono',monospace;font-size:32px;font-weight:700;color:var(--ice);text-shadow:0 0 20px rgba(79,216,255,.45);}
+  .digit-block .u{font-size:10px;color:var(--steel);text-transform:uppercase;margin-top:4px;letter-spacing:1px;}
+  .edit-hint{display:none;font-size:10px;color:var(--ok);margin-top:6px;letter-spacing:.5px;}
+  .is-admin .edit-hint{display:block;}
+  .is-admin .countdown-card{cursor:pointer;}
+
+  /* ===== layout & panels ===== */
+  .main-layout{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:24px;}
+  @media(min-width:992px){.main-layout{grid-template-columns:1fr 360px;}}
+  .left-column{display:flex;flex-direction:column;gap:24px;}
+  .panel{background:var(--panel);border:var(--border);border-radius:var(--radius);padding:24px;transition:border-color .3s;}
+  .panel:hover{border-color:rgba(255,255,255,0.12);}
+  .panel-title{margin:0 0 16px 0;font-family:'Oswald',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:2px;color:var(--steel-light);display:flex;align-items:center;gap:10px;}
+  .panel-title::before{content:"";width:4px;height:18px;background:linear-gradient(180deg,var(--ember),var(--gold));border-radius:2px;}
+  .player-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;}
+  .player-head .panel-title{margin:0;}
+  .player-box{position:relative;padding-top:56.25%;background:#000;border-radius:10px;overflow:hidden;border:var(--border);box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  .player-box iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+
+  /* ===== subs ===== */
+  .subs-flex-container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
+  .subs-flex-container > div:first-child{flex:1;min-width:200px;}
+  .odometer{display:flex;align-items:baseline;gap:10px;margin:12px 0 8px;}
+  .odometer .value{font-family:'Oswald',sans-serif;font-size:64px;font-weight:700;color:var(--ice);line-height:1;text-shadow:0 0 30px rgba(79,216,255,.5);transition:transform .3s;}
+  .odometer .value.bump{animation:bump .5s ease;}
+  @keyframes bump{0%{transform:scale(1);}40%{transform:scale(1.12);color:var(--gold);}100%{transform:scale(1);}}
+  .is-admin .odometer .value{cursor:pointer;}
+  .odometer .label{color:var(--steel);font-size:14px;}
+  .next-goal{font-size:13px;color:var(--muted);}
+  .next-goal b{color:var(--gold);}
+  .mini-bar{height:6px;background:var(--rail);border-radius:3px;margin-top:12px;overflow:hidden;max-width:340px;}
+  .mini-bar span{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--ember),var(--gold));border-radius:3px;transition:width 1s cubic-bezier(.22,1,.36,1);}
+  .subs-right-side{display:flex;flex-direction:column;align-items:flex-end;gap:10px;}
+  .status-line{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);}
+  .status-dot{width:6px;height:6px;background:var(--ok);border-radius:50%;box-shadow:0 0 6px var(--ok);}
+  .status-dot.offline{background:var(--danger);box-shadow:0 0 6px var(--danger);}
+  .btn-refresh{background:none;border:none;color:var(--steel);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:4px;transition:all .2s;}
+  .btn-refresh:hover{background:var(--rail);color:var(--text);transform:rotate(180deg);}
+
+  /* ===== boutons ===== */
+  .btn-twitch{background:#6441a5;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;cursor:pointer;font-family:'Inter',sans-serif;}
+  .btn-twitch:hover{background:#7d5bbe;transform:translateY(-2px);box-shadow:0 6px 18px rgba(100,65,165,.4);}
+  .btn-twitch.ghost{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--steel-light);}
+  .btn-twitch.ghost:hover{background:rgba(255,255,255,0.05);box-shadow:none;}
+  .btn-twitch.green{background:var(--ok);color:#06130a;}
+  .btn-twitch.green:hover{background:#31d968;box-shadow:0 6px 18px rgba(34,197,94,.35);}
+  .active-admin{box-shadow:0 0 14px rgba(34,197,94,0.4)!important;border-color:var(--ok)!important;color:var(--ok)!important;}
+
+  /* ===== chat ===== */
+  .chat-box{background:var(--panel);border:var(--border);border-radius:var(--radius);padding:24px;display:flex;flex-direction:column;}
+  .chat-container{flex:1;min-height:400px;background:#000;border-radius:10px;overflow:hidden;border:var(--border);margin-bottom:10px;}
+  .chat-container iframe{width:100%;height:100%;border:0;}
+  .viewer-note{margin:0;font-size:11px;color:var(--muted);text-align:center;}
+
+  /* ===== planning ===== */
+  .schedule-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;}
+  .schedule-head .panel-title{margin:0;}
+  .schedule-head-right{display:flex;gap:10px;}
+  .tab-row{display:flex;gap:8px;border-bottom:1px solid var(--rail);padding-bottom:12px;margin-bottom:20px;}
+  .tab{background:none;border:none;color:var(--steel);font-size:13px;padding:7px 14px;cursor:pointer;border-radius:6px;transition:all .2s;font-family:'Inter',sans-serif;}
+  .tab:hover{color:var(--text);background:rgba(255,255,255,0.03);}
+  .tab.active{color:var(--ice);background:rgba(79,216,255,0.1);font-weight:600;box-shadow:inset 0 0 0 1px rgba(79,216,255,.25);}
+  .carousel{position:relative;display:flex;align-items:center;gap:12px;}
+  .car-scroller{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;padding:6px 2px 10px;width:100%;}
+  .car-scroller::-webkit-scrollbar{height:4px;}
+  .car-scroller::-webkit-scrollbar-thumb{background:var(--rail);border-radius:2px;}
+  .car-card{background:var(--panel-2);border:var(--border);border-radius:12px;min-width:278px;max-width:278px;overflow:hidden;display:flex;flex-direction:column;transition:transform .25s,box-shadow .25s,border-color .25s;}
+  .car-card:hover{transform:translateY(-6px);box-shadow:0 14px 30px rgba(0,0,0,.45);border-color:rgba(79,216,255,.25);}
+  .car-card.live{border-color:rgba(255,77,77,0.45);box-shadow:0 0 18px rgba(255,77,77,0.12);}
+  .car-img{height:130px;background:linear-gradient(135deg,#0b0e13,#141a22);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+  .car-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+  .car-card:hover .car-img img{transform:scale(1.07);}
+  .car-img-fallback{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;color:rgba(255,255,255,0.05);letter-spacing:3px;}
+  .car-live{position:absolute;top:10px;left:10px;background:var(--danger);color:#fff;font-size:9px;font-weight:bold;text-transform:uppercase;padding:3px 8px;border-radius:4px;letter-spacing:1px;z-index:2;box-shadow:0 0 10px rgba(255,77,77,.5);}
+  .car-body{padding:16px;flex:1;display:flex;flex-direction:column;}
+  .car-when{font-size:11px;color:var(--gold);font-weight:600;margin-bottom:5px;letter-spacing:.5px;}
+  .car-title{font-size:15px;font-weight:600;color:var(--steel-light);margin-bottom:6px;line-height:1.3;}
+  .car-notes{font-size:12px;color:var(--muted);line-height:1.5;flex:1;}
+  .car-admin{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.05);display:none;gap:8px;}
+  .is-admin .car-admin{display:flex;}
+  .btn-mini{background:none;border:none;font-size:11px;cursor:pointer;padding:5px 10px;border-radius:5px;font-weight:600;transition:all .15s;font-family:'Inter',sans-serif;}
+  .btn-mini.edit{color:var(--ice);background:rgba(79,216,255,0.08);}
+  .btn-mini.edit:hover{background:rgba(79,216,255,0.18);}
+  .btn-mini.danger{color:var(--danger);background:rgba(255,77,77,0.08);}
+  .btn-mini.danger:hover{background:rgba(255,77,77,0.18);}
+  .car-btn{background:var(--panel-2);border:var(--border);color:var(--steel-light);min-width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .2s;user-select:none;}
+  .car-btn:hover{background:var(--rail);color:var(--ice);transform:scale(1.1);}
+  .car-empty{padding:40px;text-align:center;color:var(--muted);font-size:13px;width:100%;}
+
+  /* ===== sub goals ===== */
+  .rail-section{margin-top:24px;}
+  .goals-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:6px;}
+  .goals-head .panel-title{margin:0;}
+  .rail-outer{position:relative;padding:20px 0 10px;}
+  .rail-track{height:10px;background:var(--rail);border-radius:5px;position:relative;margin-bottom:34px;overflow:visible;}
+  .rail-fill{height:100%;background:linear-gradient(90deg,var(--ember),var(--gold));border-radius:5px;width:0%;transition:width 1.2s cubic-bezier(.22,1,.36,1);position:relative;overflow:hidden;}
+  .rail-fill::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.45),transparent);animation:railSheen 2.5s linear infinite;}
+  @keyframes railSheen{from{transform:translateX(-100%);}to{transform:translateX(300%);}}
+  .rail-cursor{width:18px;height:18px;background:#fff;border:4px solid var(--gold);border-radius:50%;position:absolute;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 16px rgba(232,184,75,0.7);left:0%;transition:left 1.2s cubic-bezier(.22,1,.36,1);z-index:2;}
+  .rail-nodes{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;}
+  .node{background:var(--panel-2);border:var(--border);border-radius:10px;padding:0;position:relative;transition:all .25s;overflow:hidden;display:flex;flex-direction:column;}
+  .node:hover{border-color:rgba(255,255,255,0.18);transform:translateY(-4px);box-shadow:0 10px 24px rgba(0,0,0,.4);}
+  .node.milestone{border-left:3px solid var(--gold);}
+  .node.done-node{border-color:rgba(34,197,94,.3);}
+  .node-img{height:72px;overflow:hidden;display:none;}
+  .node-img.has-img{display:block;}
+  .node-img img{width:100%;height:100%;object-fit:cover;}
+  .node-body{padding:12px;flex:1;}
+  .node .idx{font-size:9px;color:var(--steel);font-weight:600;display:block;margin-bottom:3px;letter-spacing:1px;}
+  .node .name{font-size:13px;font-weight:600;color:var(--steel-light);display:block;margin-bottom:4px;}
+  .node .thresh{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ice);display:block;margin-bottom:8px;}
+  .node .status{font-size:10px;text-transform:uppercase;font-weight:bold;padding:3px 8px;border-radius:4px;display:inline-block;letter-spacing:.5px;}
+  .node .status.done{background:rgba(34,197,94,0.12);color:var(--ok);}
+  .node .status.active{background:rgba(79,216,255,0.12);color:var(--ice);animation:pulse 2s infinite;}
+  .node .status.pending{background:var(--rail);color:var(--steel);}
+  .node-admin{padding:0 12px 12px;display:none;gap:8px;}
+  .is-admin .node-admin{display:flex;}
+
+  /* ===== CTA abonnement / footer ===== */
+  .sub-cta{position:relative;margin-top:24px;background:linear-gradient(135deg,rgba(100,65,165,.22),rgba(255,106,61,.1)),var(--panel);border:1px solid rgba(100,65,165,.4);border-radius:var(--radius);padding:38px 24px;text-align:center;overflow:hidden;}
+  .sub-cta::before{content:"";position:absolute;inset:-2px;background:linear-gradient(120deg,transparent 35%,rgba(160,120,255,.15) 50%,transparent 65%);animation:sheen 5s linear infinite;pointer-events:none;}
+  .sub-cta h2{margin:0 0 8px;font-family:'Oswald',sans-serif;font-size:26px;letter-spacing:2px;text-transform:uppercase;}
+  .sub-cta p{margin:0 0 20px;color:var(--muted);font-size:14px;}
+  .cta-big{font-size:15px;padding:15px 34px;font-weight:700;letter-spacing:1px;border-radius:10px;box-shadow:0 0 26px rgba(100,65,165,.5);animation:platePulse 3s ease-in-out infinite;}
+  footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px;}
+  @keyframes pulse{0%{opacity:0.6;}50%{opacity:1;}100%{opacity:0.6;}}
+
+  /* ===== modales ===== */
+  .modal-overlay{position:fixed;inset:0;background:rgba(4,6,9,.75);backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:20px;animation:fadeIn .2s ease;}
+  .modal-overlay.open{display:flex;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+  .modal{background:var(--panel);border:var(--border);border-radius:var(--radius);padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;animation:slideUp .25s cubic-bezier(.22,1,.36,1);box-shadow:0 30px 80px rgba(0,0,0,.6);}
+  @keyframes slideUp{from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .modal h3{margin:0 0 20px;font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel-light);}
+  .form-group{margin-bottom:16px;}
+  .form-group label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--steel);margin-bottom:6px;font-weight:600;}
+  .form-group input[type=text],.form-group input[type=password],.form-group input[type=number],.form-group input[type=datetime-local],.form-group textarea,.form-group select{
+    width:100%;background:var(--panel-2);border:var(--border);border-radius:8px;padding:11px 13px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;
+  }
+  .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--ice);box-shadow:0 0 0 3px rgba(79,216,255,.12);}
+  .form-group textarea{resize:vertical;min-height:70px;}
+  .form-check{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--steel-light);cursor:pointer;}
+  .form-check input{width:16px;height:16px;accent-color:var(--gold);cursor:pointer;}
+  .img-drop{border:2px dashed var(--rail);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .2s;font-size:12px;color:var(--muted);}
+  .img-drop:hover{border-color:var(--ice);color:var(--ice);background:rgba(79,216,255,.03);}
+  .img-preview{margin-top:10px;display:none;position:relative;}
+  .img-preview.show{display:block;}
+  .img-preview img{width:100%;max-height:140px;object-fit:cover;border-radius:8px;border:var(--border);}
+  .img-preview button{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.7);border:none;color:#fff;border-radius:50%;width:26px;height:26px;cursor:pointer;font-size:13px;}
+  .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:24px;}
+
+  /* ===== toasts ===== */
+  .toast-zone{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;flex-direction:column;gap:10px;}
+  .toast{background:var(--panel-2);border:var(--border);border-left:3px solid var(--ok);border-radius:10px;padding:13px 18px;font-size:13px;color:var(--steel-light);box-shadow:0 10px 30px rgba(0,0,0,.5);animation:toastIn .3s cubic-bezier(.22,1,.36,1);max-width:320px;}
+  .toast.err{border-left-color:var(--danger);}
+  @keyframes toastIn{from{transform:translateX(40px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+
+  /* ===== bandeau admin ===== */
+  .admin-banner{display:none;position:sticky;top:12px;z-index:50;margin-bottom:20px;background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.3);border-radius:10px;padding:10px 16px;font-size:12px;color:var(--ok);align-items:center;gap:10px;backdrop-filter:blur(8px);}
+  .is-admin .admin-banner{display:flex;}
+</style>
+</head>
+<body>
+
+<div class="bg-fx"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="bg-grid"></div>
+
+<div class="wrap">
+  <div class="main-content">
+
+    <header class="topbar">
+      <div class="brand">
+        <div class="plate">SUMMER RUSH</div>
+        <div class="brand-text">
+          <small>7 JOURS DE STREAM · 12H PAR JOUR</small>
+        </div>
+      </div>
+      <div class="live-pill"><span class="live-dot"></span> EN DIRECT SUR TWITCH</div>
+    </header>
+
+    <div class="sub-ticker" id="sub-ticker" style="display:none;">
+      <div class="ticker-label">💜 DERNIERS SUBS</div>
+      <div class="ticker-viewport">
+        <div class="ticker-track" id="ticker-track"></div>
+      </div>
+    </div>
+
+    <div class="admin-banner">🛠️ Mode admin activé — clique sur les éléments pour les modifier. Les changements sont sauvegardés automatiquement.</div>
+
+    <section class="about-box" id="about-box" onclick="adminChangeAbout()">
+      <p id="about-text"></p>
+      <div class="edit-hint">✏️ Cliquer pour modifier la description</div>
+    </section>
+
+    <section class="countdown-card" id="countdown-section" onclick="adminChangeDates()">
+      <div>
+        <div class="countdown-label" id="countdown-title">Début dans</div>
+        <div class="countdown-target" id="countdown-range-display"></div>
+        <div class="edit-hint">✏️ Cliquer pour modifier les dates</div>
+      </div>
+      <div class="countdown-digits">
+        <div class="digit-block"><div class="num" id="d-days">--</div><div class="u">jours</div></div>
+        <div class="digit-block"><div class="num" id="d-hours">--</div><div class="u">heures</div></div>
+        <div class="digit-block"><div class="num" id="d-min">--</div><div class="u">min</div></div>
+        <div class="digit-block"><div class="num" id="d-sec">--</div><div class="u">sec</div></div>
+      </div>
+    </section>
+
+    <div class="main-layout">
+      <div class="left-column">
+        <div class="panel">
+          <div class="player-head">
+            <h3 class="panel-title">Direct — YURISQUA</h3>
+            <a class="btn-twitch" href="https://id.twitch.tv/oauth2/authorize?client_id=kimne78kx3ncx6brgo4mv6wki5h1ko&redirect_uri=https://twitch.tv&response_type=token&scope=chat:read+chat:edit" target="_blank">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M4.265 3 3 6.236v13.223h4.502V21h2.531l2.392-2.541h3.658L21 13.255V3H4.265zm15.052 9.505-2.813 2.989h-4.502l-2.391 2.541v-2.541H5.813V4.687h13.504v7.818zM16.781 7.9v4.964h-1.688V7.9h1.688zm-4.502 0v4.964h-1.688V7.9h1.688z"/></svg>
+              Connexion</a>
+          </div>
+          <div class="player-box">
+            <iframe id="twitch-player" src="" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="subs-flex-container">
+            <div>
+              <h3 class="panel-title" style="margin:0 0 6px 0;">Abonnements</h3>
+              <div class="odometer">
+                <span class="value" id="sub-count" onclick="adminChangeSubs()">--</span>
+                <span class="label" id="sub-max-label">/ 1500 abonnés</span>
+              </div>
+              <div class="next-goal" id="next-goal-text">Prochain palier : <b>Chargement...</b></div>
+              <div class="mini-bar"><span id="mini-bar-fill"></span></div>
+            </div>
+
+            <div class="subs-right-side">
+              <a class="btn-twitch" href="https://www.twitch.tv/subs/yurisqua" target="_blank" style="font-size:13px;padding:12px 22px;font-weight:bold;">💜 S'abonner / offrir un sub</a>
+              <div class="status-line">
+                <span class="status-dot" id="status-indicator"></span> <span id="sync-status">Synchronisation...</span>
+                <button class="btn-refresh" onclick="fetchTwitchSubs()" title="Forcer la mise à jour">⟳</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-box">
+        <h3 class="panel-title">Chat Twitch</h3>
+        <div class="chat-container">
+          <iframe id="twitch-chat" src=""></iframe>
+        </div>
+        <p class="viewer-note">Utilise le bouton de connexion en haut à gauche pour interagir.</p>
+      </div>
+    </div>
+
+    <section class="panel schedule-panel">
+      <div class="schedule-head">
+        <h3 class="panel-title">Planning</h3>
+        <div class="schedule-head-right">
+          <button class="btn-twitch ghost" id="admin-toggle-btn" onclick="toggleAdminMode()">Mode admin</button>
+          <button class="btn-twitch green" id="admin-add-event" style="display:none;" onclick="openEventModal()">+ Ajouter un event</button>
+        </div>
+      </div>
+      <div class="tab-row">
+        <button class="tab active" onclick="switchTab('now', this)">Actuellement</button>
+        <button class="tab" onclick="switchTab('next', this)">À venir</button>
+        <button class="tab" onclick="switchTab('all', this)">Planning complet</button>
+      </div>
+      <div class="carousel">
+        <button class="car-btn left" onclick="scrollCarousel(-1)">‹</button>
+        <div class="car-scroller" id="carousel-scroller"></div>
+        <button class="car-btn right" onclick="scrollCarousel(1)">›</button>
+      </div>
+    </section>
+
+    <section class="panel rail-section">
+      <div class="goals-head">
+        <h3 class="panel-title">SUB GOALS</h3>
+        <button class="btn-twitch green" id="admin-add-goal" style="display:none;" onclick="openGoalModal()">+ Ajouter un palier</button>
+      </div>
+      <div class="rail-outer">
+        <div class="rail-track">
+          <div class="rail-fill" id="rail-fill"></div>
+          <div class="rail-cursor" id="rail-cursor"></div>
+        </div>
+        <div class="rail-nodes" id="rail-nodes-container"></div>
+      </div>
+    </section>
+
+    <section class="sub-cta">
+      <h2>Chaque sub compte. 💜</h2>
+      <p>Abonne-toi ou offre des subs pour débloquer les paliers du SUMMER RUSH en direct !</p>
+      <a class="btn-twitch cta-big" href="https://www.twitch.tv/subs/yurisqua" target="_blank">S'ABONNER MAINTENANT</a>
+    </section>
+
+    <footer>SUMMER RUSH — DESIGN STREAM POUR YURISQUA</footer>
+  </div>
+</div>
+
+<!-- ===== Modale mot de passe admin ===== -->
+<div class="modal-overlay" id="modal-password">
+  <div class="modal">
+    <h3>🔐 Accès administrateur</h3>
+    <div class="form-group">
+      <label for="admin-pass-input">Mot de passe</label>
+      <input type="password" id="admin-pass-input" placeholder="••••••" onkeydown="if(event.key==='Enter')confirmAdminPassword()">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-twitch ghost" onclick="closeModal('modal-password')">Annuler</button>
+      <button class="btn-twitch green" onclick="confirmAdminPassword()">Valider</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modale événement planning ===== -->
+<div class="modal-overlay" id="modal-event">
+  <div class="modal">
+    <h3 id="event-modal-title">Ajouter un événement</h3>
+    <input type="hidden" id="event-id">
+    <div class="form-group">
+      <label for="event-title">Titre *</label>
+      <input type="text" id="event-title" placeholder="Ex: Session Course SimRacing">
+    </div>
+    <div class="form-group">
+      <label for="event-when">Quand</label>
+      <input type="text" id="event-when" placeholder="Ex: Dimanche 12 - 18:00">
+    </div>
+    <div class="form-group">
+      <label for="event-type">Statut</label>
+      <select id="event-type">
+        <option value="now">🔴 Actuellement (en direct)</option>
+        <option value="next">⏭️ À venir (prochain)</option>
+        <option value="all" selected>📅 Planning général</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="event-notes">Description</label>
+      <textarea id="event-notes" placeholder="Description de l'événement..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Image</label>
+      <input type="text" id="event-img-url" placeholder="Coller une URL d'image..." oninput="previewFromUrl('event')" style="margin-bottom:8px;">
+      <div class="img-drop" onclick="document.getElementById('event-img-file').click()">📁 ...ou cliquer pour choisir un fichier</div>
+      <input type="file" id="event-img-file" accept="image/*" style="display:none;" onchange="handleImageFile(this,'event')">
+      <div class="img-preview" id="event-img-preview">
+        <img id="event-img-preview-img" alt="Aperçu">
+        <button onclick="clearImage('event')" title="Retirer l'image">✕</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-twitch ghost" onclick="closeModal('modal-event')">Annuler</button>
+      <button class="btn-twitch green" onclick="saveEvent()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modale sub goal ===== -->
+<div class="modal-overlay" id="modal-goal">
+  <div class="modal">
+    <h3 id="goal-modal-title">Ajouter un palier</h3>
+    <input type="hidden" id="goal-index">
+    <div class="form-group">
+      <label for="goal-name">Nom du palier *</label>
+      <input type="text" id="goal-name" placeholder="Ex: 24h non-stop">
+    </div>
+    <div class="form-group">
+      <label for="goal-thresh">Nombre d'abonnés requis *</label>
+      <input type="number" id="goal-thresh" min="1" placeholder="Ex: 250">
+    </div>
+    <div class="form-group">
+      <label class="form-check"><input type="checkbox" id="goal-milestone"> Palier majeur (milestone)</label>
+    </div>
+    <div class="form-group">
+      <label>Image</label>
+      <input type="text" id="goal-img-url" placeholder="Coller une URL d'image..." oninput="previewFromUrl('goal')" style="margin-bottom:8px;">
+      <div class="img-drop" onclick="document.getElementById('goal-img-file').click()">📁 ...ou cliquer pour choisir un fichier</div>
+      <input type="file" id="goal-img-file" accept="image/*" style="display:none;" onchange="handleImageFile(this,'goal')">
+      <div class="img-preview" id="goal-img-preview">
+        <img id="goal-img-preview-img" alt="Aperçu">
+        <button onclick="clearImage('goal')" title="Retirer l'image">✕</button>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-twitch ghost" onclick="closeModal('modal-goal')">Annuler</button>
+      <button class="btn-twitch green" onclick="saveGoal()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modale description projet ===== -->
+<div class="modal-overlay" id="modal-about">
+  <div class="modal">
+    <h3>📝 Description du projet</h3>
+    <div class="form-group">
+      <label for="about-input">Texte affiché en haut du site</label>
+      <textarea id="about-input" style="min-height:110px;"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-twitch ghost" onclick="closeModal('modal-about')">Annuler</button>
+      <button class="btn-twitch green" onclick="saveAbout()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modale dates ===== -->
+<div class="modal-overlay" id="modal-dates">
+  <div class="modal">
+    <h3>📅 Modifier les dates</h3>
+    <div class="form-group">
+      <label for="date-start">Début de l'événement</label>
+      <input type="datetime-local" id="date-start">
+    </div>
+    <div class="form-group">
+      <label for="date-end">Fin de l'événement</label>
+      <input type="datetime-local" id="date-end">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-twitch ghost" onclick="closeModal('modal-dates')">Annuler</button>
+      <button class="btn-twitch green" onclick="saveDates()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Modale compteur subs ===== -->
+<div class="modal-overlay" id="modal-subs">
+  <div class="modal">
+    <h3>🔢 Réglage du compteur</h3>
+    <p style="font-size:12px;color:var(--muted);margin:0 0 16px;" id="subs-api-info">Le compteur affiché = total StreamElements − subs de départ. Il reste synchronisé avec l'API.</p>
+    <div class="form-group">
+      <label for="subs-input">Compteur affiché sur le site</label>
+      <input type="number" id="subs-input" min="0">
+    </div>
+    <div class="form-group">
+      <button class="btn-twitch ghost" style="width:100%;justify-content:center;" onclick="resetSubsBaseline()">🚀 Repartir de zéro maintenant (début d'événement)</button>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-twitch ghost" onclick="closeModal('modal-subs')">Annuler</button>
+      <button class="btn-twitch green" onclick="saveSubs()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-zone" id="toast-zone"></div>
+
+<script>
+  const DEFAULT_DATA = {
+    videoChannel: "yurisqua",
+    chatChannel: "yurisqua",
+    about: "Le SUMMER RUSH, c'est 7 jours de stream non-stop, 12h par jour, avec des paliers de subs à débloquer ensemble : défis, invités et surprises tout au long de la semaine. Abonne-toi pour faire avancer la barre !",
+    startDate: "2026-07-11T16:00:00",
+    endDate: "2026-07-18T16:00:00",
+    currentSubs: 0,
+    totalSubs: null,   // total renvoyé par StreamElements
+    subOffset: 0,      // subs "de départ" à soustraire (compteur depuis le début de l'événement)
+    goals: [
+      { thresh: 25,   name: "Warm-up",             milestone: false, image: "" },
+      { thresh: 100,  name: "Nouveau setup micro", milestone: true,  image: "" },
+      { thresh: 250,  name: "24h non-stop",        milestone: false, image: "" },
+      { thresh: 500,  name: "Guest surprise",      milestone: true,  image: "" },
+      { thresh: 750,  name: "48h non-stop",        milestone: false, image: "" },
+      { thresh: 1000, name: "Cadeaux viewers",     milestone: true,  image: "" },
+      { thresh: 1500, name: "Boss final",          milestone: true,  image: "" }
+    ],
+    schedule: [
+      { id: 1, title: "Lancement & Warm-up", type: "now", when: "Samedi 11 - 16:00", image: "", notes: "Découverte des paliers et début des hostilités." },
+      { id: 2, title: "Session Course SimRacing", type: "next", when: "Samedi 11 - 20:00", image: "", notes: "Premiers tours de piste avec la communauté." },
+      { id: 3, title: "Nuit Blanche Gaming", type: "all", when: "Dimanche 12 - 01:00", image: "", notes: "Survie nocturne sur des jeux d'horreur." },
+      { id: 4, title: "Le Débrief de l'écurie", type: "all", when: "Dimanche 12 - 14:00", image: "", notes: "Invités surprises et discussions mécaniques." }
+    ]
+  };
+
+  // Mot de passe admin (présent dans le code, comme demandé)
+  const ADMIN_KEY = "66ec4c";
+
+  let DATA = DEFAULT_DATA;
+  try {
+    const stored = JSON.parse(localStorage.getItem('summer_rush_data'));
+    if (stored && stored.schedule && stored.goals) DATA = stored;
+  } catch(e) {}
+  if (DATA.subOffset === undefined) DATA.subOffset = 0;
+  if (DATA.totalSubs === undefined) DATA.totalSubs = null;
+  if (DATA.about === undefined) DATA.about = DEFAULT_DATA.about;
+
+  function saveToLocalStorage() {
+    try {
+      localStorage.setItem('summer_rush_data', JSON.stringify(DATA));
+    } catch(e) {
+      showToast("⚠️ Stockage plein — utilise des URL d'images plutôt que des fichiers lourds.", true);
+    }
+  }
+
+  let currentFilter = 'now';
+  let lastSubCount = null;
+
+  /* ================= TOASTS ================= */
+  function showToast(msg, isError = false) {
+    const zone = document.getElementById('toast-zone');
+    const t = document.createElement('div');
+    t.className = 'toast' + (isError ? ' err' : '');
+    t.textContent = msg;
+    zone.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .4s'; setTimeout(() => t.remove(), 400); }, 3500);
+  }
+
+  /* ================= MODALES ================= */
+  function openModal(id) { document.getElementById(id).classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  document.querySelectorAll('.modal-overlay').forEach(ov => {
+    ov.addEventListener('click', e => { if (e.target === ov) ov.classList.remove('open'); });
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+  });
+
+  /* ================= IMAGES (URL ou fichier) ================= */
+  const pendingImages = { event: "", goal: "" };
+
+  function handleImageFile(input, ctx) {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    if (file.size > 1.5 * 1024 * 1024) {
+      showToast("⚠️ Image trop lourde (max ~1,5 Mo). Utilise plutôt une URL.", true);
+      input.value = "";
+      return;
+    }
+    // Redimensionne côté client pour ne pas saturer le localStorage
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxW = 640;
+        const scale = Math.min(1, maxW / img.width);
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        pendingImages[ctx] = canvas.toDataURL('image/jpeg', 0.82);
+        document.getElementById(ctx + '-img-url').value = "";
+        showImagePreview(ctx, pendingImages[ctx]);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+    input.value = "";
+  }
+
+  function previewFromUrl(ctx) {
+    const url = document.getElementById(ctx + '-img-url').value.trim();
+    pendingImages[ctx] = url;
+    if (url) showImagePreview(ctx, url);
+    else hideImagePreview(ctx);
+  }
+
+  function showImagePreview(ctx, src) {
+    document.getElementById(ctx + '-img-preview-img').src = src;
+    document.getElementById(ctx + '-img-preview').classList.add('show');
+  }
+  function hideImagePreview(ctx) {
+    document.getElementById(ctx + '-img-preview').classList.remove('show');
+  }
+  function clearImage(ctx) {
+    pendingImages[ctx] = "";
+    document.getElementById(ctx + '-img-url').value = "";
+    hideImagePreview(ctx);
+  }
+
+  /* ================= SYNC TWITCH / STREAMELEMENTS ================= */
+  async function fetchTwitchSubs() {
+    const statusText = document.getElementById('sync-status');
+    const subCountDisplay = document.getElementById('sub-count');
+    const indicator = document.getElementById('status-indicator');
+    if (!statusText || !subCountDisplay) return;
+
+    try {
+      const response = await fetch('/api/get-subs');
+      if (!response.ok) throw new Error("Réponse serveur incorrecte");
+      const data = await response.json();
+
+      if (data && data.subs !== undefined) {
+        DATA.totalSubs = parseInt(data.subs) || 0;
+        DATA.currentSubs = Math.max(0, DATA.totalSubs - (DATA.subOffset || 0));
+        if (Array.isArray(data.recent)) renderTicker(data.recent);
+        statusText.innerText = "Synchronisé — " + new Date().toLocaleTimeString('fr-FR', {hour:'2-digit',minute:'2-digit'});
+        subCountDisplay.style.color = "var(--ice)";
+        if (indicator) indicator.className = "status-dot";
+        saveToLocalStorage();
+      } else {
+        throw new Error("Données manquantes");
+      }
+    } catch (error) {
+      console.warn("Erreur de fonction Netlify, bascule en mode Local :", error);
+      statusText.innerText = "Mode Local (Synchro Off)";
+      subCountDisplay.style.color = "var(--text)";
+      if (indicator) indicator.className = "status-dot offline";
+    } finally {
+      updateUI();
+    }
+  }
+
+  /* ================= BANDEAU DERNIERS SUBS ================= */
+  function renderTicker(recent) {
+    const ticker = document.getElementById('sub-ticker');
+    const track = document.getElementById('ticker-track');
+    if (!ticker || !track || recent.length === 0) return;
+
+    const itemsHtml = recent.map(s => {
+      if (s.gifted && s.sender) {
+        return `<span class="ticker-item"><span class="t-gift">🎁</span> <b>${escapeHtml(s.sender)}</b> a offert un sub à <b>${escapeHtml(s.name)}</b></span>`;
+      }
+      const months = s.months > 1 ? `<span class="t-months">×${s.months} mois</span>` : `<span class="t-months">nouveau</span>`;
+      return `<span class="ticker-item">💜 <b>${escapeHtml(s.name)}</b> ${months}</span>`;
+    }).join('');
+
+    // Contenu doublé pour une boucle de défilement infinie et fluide
+    track.innerHTML = itemsHtml + itemsHtml;
+    // Vitesse proportionnelle au nombre d'éléments pour rester lisible
+    track.style.animationDuration = Math.max(25, recent.length * 3.5) + "s";
+    ticker.style.display = "flex";
+  }
+
+  /* ================= MODE ADMIN ================= */
+  function toggleAdminMode() {
+    if (!document.body.classList.contains('is-admin')) {
+      document.getElementById('admin-pass-input').value = "";
+      openModal('modal-password');
+      setTimeout(() => document.getElementById('admin-pass-input').focus(), 100);
+    } else {
+      setAdminMode(false);
+      showToast("Mode admin désactivé.");
+    }
+  }
+
+  function confirmAdminPassword() {
+    const pass = document.getElementById('admin-pass-input').value.trim();
+    if (pass !== ADMIN_KEY) {
+      showToast("❌ Mot de passe incorrect.", true);
+      return;
+    }
+    closeModal('modal-password');
+    setAdminMode(true);
+    showToast("✅ Mode admin activé !");
+  }
+
+  function setAdminMode(on) {
+    const toggleBtn = document.getElementById('admin-toggle-btn');
+    const addBtn = document.getElementById('admin-add-event');
+    const addGoalBtn = document.getElementById('admin-add-goal');
+    document.body.classList.toggle('is-admin', on);
+    if (toggleBtn) {
+      toggleBtn.innerText = on ? "Quitter Admin" : "Mode admin";
+      toggleBtn.classList.toggle('active-admin', on);
+    }
+    if (addBtn) addBtn.style.display = on ? "inline-flex" : "none";
+    if (addGoalBtn) addGoalBtn.style.display = on ? "inline-flex" : "none";
+    renderSchedule();
+    updateUI();
+  }
+
+  /* ================= PLAYER / CHAT ================= */
+  const host = window.location.hostname || "localhost";
+  const playerEl = document.getElementById('twitch-player');
+  const chatEl = document.getElementById('twitch-chat');
+  if (playerEl) playerEl.src = `https://player.twitch.tv/?channel=${DATA.videoChannel}&parent=${host}&muted=false`;
+  if (chatEl) chatEl.src = `https://www.twitch.tv/embed/${DATA.chatChannel}/chat?parent=${host}&darkpopout`;
+
+  /* ================= DESCRIPTION PROJET ================= */
+  function renderAbout() {
+    const el = document.getElementById('about-text');
+    if (el) el.innerText = DATA.about || "";
+  }
+
+  function adminChangeAbout() {
+    if (!document.body.classList.contains('is-admin')) return;
+    document.getElementById('about-input').value = DATA.about || "";
+    openModal('modal-about');
+  }
+
+  function saveAbout() {
+    DATA.about = document.getElementById('about-input').value.trim();
+    saveToLocalStorage();
+    renderAbout();
+    closeModal('modal-about');
+    showToast("📝 Description mise à jour.");
+  }
+
+  /* ================= COUNTDOWN / DATES ================= */
+  function formatRangeText() {
+    const options = { day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit' };
+    const startStr = new Date(DATA.startDate).toLocaleDateString('fr-FR', options);
+    const endStr = new Date(DATA.endDate).toLocaleDateString('fr-FR', options);
+    const displayEl = document.getElementById('countdown-range-display');
+    if (displayEl) displayEl.innerText = `Du ${startStr} au ${endStr}`;
+  }
+
+  function adminChangeDates() {
+    if (!document.body.classList.contains('is-admin')) return;
+    document.getElementById('date-start').value = DATA.startDate.slice(0, 16);
+    document.getElementById('date-end').value = DATA.endDate.slice(0, 16);
+    openModal('modal-dates');
+  }
+
+  function saveDates() {
+    const start = document.getElementById('date-start').value;
+    const end = document.getElementById('date-end').value;
+    if (start) DATA.startDate = start + ":00";
+    if (end) DATA.endDate = end + ":00";
+    saveToLocalStorage();
+    formatRangeText();
+    handleCountdown();
+    closeModal('modal-dates');
+    showToast("📅 Dates mises à jour.");
+  }
+
+  /* ================= COMPTEUR SUBS (édition locale) ================= */
+  function adminChangeSubs() {
+    if (!document.body.classList.contains('is-admin')) return;
+    document.getElementById('subs-input').value = DATA.currentSubs;
+    const info = document.getElementById('subs-api-info');
+    if (info) {
+      info.innerHTML = DATA.totalSubs !== null
+        ? `Total StreamElements : <b style="color:var(--ice)">${DATA.totalSubs}</b> subs · Subs de départ soustraits : <b style="color:var(--gold)">${DATA.subOffset || 0}</b>.<br>Le compteur affiché reste synchronisé : total − départ.`
+        : `⚠️ API hors ligne — la valeur saisie sera utilisée telle quelle jusqu'à la prochaine synchro.`;
+    }
+    openModal('modal-subs');
+  }
+
+  function saveSubs() {
+    const val = parseInt(document.getElementById('subs-input').value);
+    if (isNaN(val) || val < 0) return;
+    if (DATA.totalSubs !== null) {
+      // On ajuste l'offset pour que (total API − offset) = valeur voulue,
+      // ainsi le compteur reste calé sur l'API aux synchros suivantes.
+      DATA.subOffset = DATA.totalSubs - val;
+      DATA.currentSubs = val;
+    } else {
+      DATA.currentSubs = val;
+    }
+    saveToLocalStorage();
+    updateUI();
+    closeModal('modal-subs');
+    showToast("🔢 Compteur mis à jour.");
+  }
+
+  function resetSubsBaseline() {
+    if (DATA.totalSubs === null) {
+      showToast("⚠️ Impossible : l'API n'a pas encore répondu.", true);
+      return;
+    }
+    DATA.subOffset = DATA.totalSubs;
+    DATA.currentSubs = 0;
+    saveToLocalStorage();
+    updateUI();
+    closeModal('modal-subs');
+    showToast("🚀 Compteur remis à zéro — il comptera les subs à partir de maintenant.");
+  }
+
+  /* ================= UI SUBS + GOALS ================= */
+  function escapeHtml(str) {
+    return String(str ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+
+  function updateUI() {
+    const subCountEl = document.getElementById('sub-count');
+    const subMaxLabelEl = document.getElementById('sub-max-label');
+    const railFillEl = document.getElementById('rail-fill');
+    const railCursorEl = document.getElementById('rail-cursor');
+    const container = document.getElementById('rail-nodes-container');
+    const nextGoalText = document.getElementById('next-goal-text');
+    const miniBar = document.getElementById('mini-bar-fill');
+
+    if (subCountEl) {
+      subCountEl.innerText = DATA.currentSubs;
+      if (lastSubCount !== null && DATA.currentSubs !== lastSubCount) {
+        subCountEl.classList.remove('bump');
+        void subCountEl.offsetWidth;
+        subCountEl.classList.add('bump');
+      }
+      lastSubCount = DATA.currentSubs;
+    }
+
+    DATA.goals.sort((a, b) => a.thresh - b.thresh);
+    const maxGoal = DATA.goals[DATA.goals.length - 1]?.thresh || 1500;
+    if (subMaxLabelEl) subMaxLabelEl.innerText = `/ ${maxGoal} abonnés`;
+
+    const progressPercent = Math.min(100, Math.max(0, (DATA.currentSubs / maxGoal) * 100));
+    if (railFillEl) railFillEl.style.width = `${progressPercent}%`;
+    if (railCursorEl) railCursorEl.style.left = `${progressPercent}%`;
+    if (miniBar) miniBar.style.width = `${progressPercent}%`;
+
+    if (container) {
+      container.innerHTML = "";
+      let nextGoal = null;
+
+      DATA.goals.forEach((g, idx) => {
+        let status = "pending";
+        if (DATA.currentSubs >= g.thresh) status = "done";
+        else if (!nextGoal) { status = "active"; nextGoal = g; }
+
+        const imgHtml = g.image
+          ? `<div class="node-img has-img"><img src="${escapeHtml(g.image)}" alt=""></div>`
+          : `<div class="node-img"></div>`;
+
+        container.innerHTML += `
+          <div class="node ${g.milestone ? 'milestone' : ''} ${status === 'done' ? 'done-node' : ''}">
+            ${imgHtml}
+            <div class="node-body">
+              <span class="idx">GOAL ${String(idx + 1).padStart(2, '0')}</span>
+              <span class="name">${escapeHtml(g.name)}</span>
+              <span class="thresh">${g.thresh} subs</span>
+              <span class="status ${status}">${status === 'done' ? '✔ atteint' : (status === 'active' ? 'en cours' : 'à venir')}</span>
+            </div>
+            <div class="node-admin">
+              <button class="btn-mini edit" onclick="openGoalModal(${idx})">✏️ Modifier</button>
+              <button class="btn-mini danger" onclick="adminDeleteGoal(${idx})">Supprimer</button>
+            </div>
+          </div>
+        `;
+      });
+
+      if (nextGoalText) {
+        if (nextGoal) {
+          nextGoalText.innerHTML = `Prochain palier : <b>${escapeHtml(nextGoal.name)}</b> (${nextGoal.thresh} subs — encore ${nextGoal.thresh - DATA.currentSubs})`;
+        } else {
+          nextGoalText.innerHTML = `🏆 <b>Tous les paliers SUB GOALS ont été débloqués !</b>`;
+        }
+      }
+    }
+  }
+
+  /* ================= CRUD SUB GOALS ================= */
+  function openGoalModal(index = null) {
+    if (!document.body.classList.contains('is-admin')) return;
+    const isEdit = index !== null && index !== undefined;
+    document.getElementById('goal-modal-title').innerText = isEdit ? "Modifier le palier" : "Ajouter un palier";
+    document.getElementById('goal-index').value = isEdit ? index : "";
+    const g = isEdit ? DATA.goals[index] : { name: "", thresh: "", milestone: false, image: "" };
+    document.getElementById('goal-name').value = g.name;
+    document.getElementById('goal-thresh').value = g.thresh;
+    document.getElementById('goal-milestone').checked = !!g.milestone;
+    pendingImages.goal = g.image || "";
+    document.getElementById('goal-img-url').value = (g.image && !g.image.startsWith('data:')) ? g.image : "";
+    if (g.image) showImagePreview('goal', g.image); else hideImagePreview('goal');
+    openModal('modal-goal');
+  }
+
+  function saveGoal() {
+    const name = document.getElementById('goal-name').value.trim();
+    const thresh = parseInt(document.getElementById('goal-thresh').value);
+    if (!name || isNaN(thresh) || thresh < 1) {
+      showToast("⚠️ Nom et nombre d'abonnés requis.", true);
+      return;
+    }
+    const goal = {
+      name,
+      thresh,
+      milestone: document.getElementById('goal-milestone').checked,
+      image: pendingImages.goal || ""
+    };
+    const idxRaw = document.getElementById('goal-index').value;
+    if (idxRaw !== "") {
+      DATA.goals[parseInt(idxRaw)] = goal;
+      showToast("✏️ Palier modifié.");
+    } else {
+      DATA.goals.push(goal);
+      showToast("✅ Palier ajouté.");
+    }
+    saveToLocalStorage();
+    updateUI();
+    closeModal('modal-goal');
+  }
+
+  function adminDeleteGoal(index) {
+    if (!document.body.classList.contains('is-admin')) return;
+    if (!confirm(`Supprimer le palier "${DATA.goals[index].name}" ?`)) return;
+    DATA.goals.splice(index, 1);
+    saveToLocalStorage();
+    updateUI();
+    showToast("🗑️ Palier supprimé.");
+  }
+
+  /* ================= CRUD PLANNING ================= */
+  function openEventModal(id = null) {
+    if (!document.body.classList.contains('is-admin')) return;
+    const isEdit = id !== null && id !== undefined;
+    const ev = isEdit ? DATA.schedule.find(e => e.id === id) : null;
+    document.getElementById('event-modal-title').innerText = isEdit ? "Modifier l'événement" : "Ajouter un événement";
+    document.getElementById('event-id').value = isEdit ? id : "";
+    document.getElementById('event-title').value = ev ? ev.title : "";
+    document.getElementById('event-when').value = ev ? ev.when : "";
+    document.getElementById('event-type').value = ev ? ev.type : "all";
+    document.getElementById('event-notes').value = ev ? ev.notes : "";
+    pendingImages.event = ev ? (ev.image || "") : "";
+    document.getElementById('event-img-url').value = (ev && ev.image && !ev.image.startsWith('data:')) ? ev.image : "";
+    if (ev && ev.image) showImagePreview('event', ev.image); else hideImagePreview('event');
+    openModal('modal-event');
+  }
+
+  function saveEvent() {
+    const title = document.getElementById('event-title').value.trim();
+    if (!title) {
+      showToast("⚠️ Le titre est obligatoire.", true);
+      return;
+    }
+    const idRaw = document.getElementById('event-id').value;
+    const evData = {
+      title,
+      when: document.getElementById('event-when').value.trim() || "À venir",
+      type: document.getElementById('event-type').value,
+      notes: document.getElementById('event-notes').value.trim(),
+      image: pendingImages.event || ""
+    };
+
+    if (idRaw !== "") {
+      const idx = DATA.schedule.findIndex(e => e.id === parseInt(idRaw));
+      if (idx !== -1) DATA.schedule[idx] = { id: parseInt(idRaw), ...evData };
+      showToast("✏️ Événement modifié.");
+    } else {
+      DATA.schedule.push({ id: Date.now(), ...evData });
+      showToast("✅ Événement ajouté au planning.");
+    }
+    saveToLocalStorage();
+    renderSchedule();
+    closeModal('modal-event');
+  }
+
+  function adminDeleteEvent(id) {
+    if (!document.body.classList.contains('is-admin')) return;
+    const ev = DATA.schedule.find(e => e.id === id);
+    if (!confirm(`Supprimer "${ev ? ev.title : 'cet événement'}" ?`)) return;
+    DATA.schedule = DATA.schedule.filter(e => e.id !== id);
+    saveToLocalStorage();
+    renderSchedule();
+    showToast("🗑️ Événement supprimé.");
+  }
+
+  /* ================= RENDU PLANNING ================= */
+  function switchTab(type, element) {
+    currentFilter = type;
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    element.classList.add('active');
+    renderSchedule();
+  }
+
+  function renderSchedule() {
+    const scroller = document.getElementById('carousel-scroller');
+    if (!scroller) return;
+    scroller.innerHTML = "";
+
+    const list = DATA.schedule.filter(item => currentFilter === 'all' || item.type === currentFilter);
+
+    if (list.length === 0) {
+      scroller.innerHTML = `<div class="car-empty">Aucun événement programmé...</div>`;
+      return;
+    }
+
+    list.forEach(item => {
+      const displayImage = item.image
+        ? `<img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">`
+        : `<div class="car-img-fallback">${escapeHtml(DATA.videoChannel.toUpperCase())}</div>`;
+      scroller.innerHTML += `
+        <div class="car-card ${item.type === 'now' ? 'live' : ''}">
+          <div class="car-img">
+            ${item.type === 'now' ? '<span class="car-live">En direct</span>' : ''}
+            ${displayImage}
+          </div>
+          <div class="car-body">
+            <div class="car-when">${escapeHtml(item.when)}</div>
+            <div class="car-title">${escapeHtml(item.title)}</div>
+            <div class="car-notes">${escapeHtml(item.notes)}</div>
+            <div class="car-admin">
+              <button class="btn-mini edit" onclick="openEventModal(${item.id})">✏️ Modifier</button>
+              <button class="btn-mini danger" onclick="adminDeleteEvent(${item.id})">Supprimer</button>
+            </div>
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  function scrollCarousel(dir) {
+    const scroller = document.getElementById('carousel-scroller');
+    if (scroller) scroller.scrollLeft += dir * 294;
+  }
+
+  /* ================= COUNTDOWN ================= */
+  function handleCountdown() {
+    const now = new Date().getTime();
+    const start = new Date(DATA.startDate).getTime();
+    const end = new Date(DATA.endDate).getTime();
+    let targetTime = start; let title = "Début dans";
+
+    if (now >= start) { targetTime = end; title = "Fin prévue dans"; }
+    const titleEl = document.getElementById('countdown-title');
+    if (titleEl) titleEl.innerText = title;
+
+    const card = document.getElementById('countdown-section');
+    const diff = targetTime - now;
+    if (diff <= 0) {
+      if (card) card.style.display = 'none';
+      return;
+    }
+    if (card) card.style.display = '';
+
+    const days = Math.floor(diff / 86400000);
+    const hours = Math.floor((diff % 86400000) / 3600000);
+    const minutes = Math.floor((diff % 3600000) / 60000);
+    const seconds = Math.floor((diff % 60000) / 1000);
+
+    const set = (id, v) => { const el = document.getElementById(id); if (el) el.innerText = String(v).padStart(2, '0'); };
+    set('d-days', days); set('d-hours', hours); set('d-min', minutes); set('d-sec', seconds);
+  }
+
+  /* ================= INIT ================= */
+  renderAbout();
+  formatRangeText();
+  handleCountdown();
+  updateUI();
+  renderSchedule();
+
+  fetchTwitchSubs();
+  setInterval(fetchTwitchSubs, 30000);
+  setInterval(handleCountdown, 1000);
+</script>
+</body>
+</html>
