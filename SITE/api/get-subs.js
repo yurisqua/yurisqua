@@ -2,8 +2,14 @@
 // Les identifiants viennent des variables d'environnement Vercel si configurées,
 // sinon des valeurs de secours ci-dessous.
 module.exports = async function handler(req, res) {
-  const accountId = process.env.STREAMELEMENTS_ACCOUNT_ID || "5cdbcb0c05ee530db7df2cb5";
-  const jwtToken = process.env.STREAMELEMENTS_JWT || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJjaXRhZGVsIiwiZXhwIjoxNzk2NTEwNDg1LCJqdGkiOiJlYWEzMjEyYS1kMGIwLTQyNWQtYjA5Yy04Zjc5NDU4OTA2ZDYiLCJjaGFubmVsIjoiNWNkYmNiMGMwNWVlNTMwZGI3ZGYyY2I1Iiwicm9sZSI6Im93bmVyIiwiYXV0aFRva2VuIjoiOHktVGRKLVlkZXRvVV9FMTdIU2Y0YktYNUtZNk1PaDY1bXBRQ1ZQcFFzc2tRV3FVIiwidXNlciI6IjVjZGJjYjBjMDVlZTUzOGU1ZWRmMmNiNCIsInVzZXJfaWQiOiI0N2M0ZjhlMi1mNzZiLTQzYTYtYjVmOS1kMzNlYjllN2E5MzkiLCJ1c2VyX3JvbGUiOiJjcmVhdG9yIiwicHJvdmlkZXIiOiJ0d2l0Y2giLCJwcm92aWRlcl9pZCI6IjQzMTUzMDM4NSIsImNoYW5uZWxfaWQiOiJlNjkxMGIwZC05NjE1LTQ3NjYtYjczNy01NmIwNDBhMjYzYjgiLCJjcmVhdG9yX2lkIjoiN2NkODliYzgtZWY0NC00NjM1LWI1OTEtZjU4N2JkNTZjZGRhIn0.BAMVRMoaUuNg2wxsffAhONj_Mvl8XT1ZzxV3jZMPz7w";
+  // IMPORTANT : ne jamais coder un secret en dur ici. Configure ces deux valeurs
+  // exclusivement dans les variables d'environnement Vercel (Project Settings > Environment Variables).
+  const accountId = process.env.STREAMELEMENTS_ACCOUNT_ID;
+  const jwtToken = process.env.STREAMELEMENTS_JWT;
+
+  if (!accountId || !jwtToken) {
+    return res.status(500).json({ error: "Configuration manquante : STREAMELEMENTS_ACCOUNT_ID / STREAMELEMENTS_JWT ne sont pas définis dans les variables d'environnement." });
+  }
 
   const headers = {
     "Accept": "application/json",
