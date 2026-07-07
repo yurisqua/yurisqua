@@ -546,9 +546,6 @@
     ]
   };
 
-  // Mot de passe admin (présent dans le code, comme demandé)
-  const ADMIN_KEY = "66ec4c";
-
   let DATA = DEFAULT_DATA;
   try {
     const stored = JSON.parse(localStorage.getItem('summer_rush_data'));
@@ -707,15 +704,27 @@
     }
   }
 
-  function confirmAdminPassword() {
+  async function confirmAdminPassword() {
     const pass = document.getElementById('admin-pass-input').value.trim();
-    if (pass !== ADMIN_KEY) {
+    if (!pass) return;
+
+    // Version hachée et sécurisée de ton mot de passe
+    const HASH_SECRET = "704951d64f8e2260d4795fc9f603165fd05c16672787bb9d3b0332089b69b512"; 
+
+    // Chiffrement à la volée de ce que tu tapes dans la modale
+    const msgBuffer = new TextEncoder().encode(pass);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashedInput = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+    // Comparaison des deux chaînes de caractères chiffrées
+    if (hashedInput === HASH_SECRET) {
+      closeModal('modal-password');
+      setAdminMode(true);
+      showToast("✅ Mode admin activé !");
+    } else {
       showToast("❌ Mot de passe incorrect.", true);
-      return;
     }
-    closeModal('modal-password');
-    setAdminMode(true);
-    showToast("✅ Mode admin activé !");
   }
 
   function setAdminMode(on) {
