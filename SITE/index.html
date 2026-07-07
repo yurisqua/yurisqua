@@ -91,8 +91,11 @@
 
   /* ===== layout & panels ===== */
   .main-layout{display:grid;grid-template-columns:1fr;gap:24px;margin-bottom:24px;}
-  @media(min-width:992px){.main-layout{grid-template-columns:1fr 360px;}}
-  .left-column{display:flex;flex-direction:column;gap:24px;}
+  @media(min-width:992px){.main-layout{grid-template-columns:minmax(0,1fr) 360px;}}
+  .left-column{display:flex;flex-direction:column;gap:24px;min-width:0;}
+  .chat-box{min-width:0;}
+  .sub-ticker{min-width:0;}
+  .ticker-viewport{min-width:0;}
   .panel{background:var(--panel);border:var(--border);border-radius:var(--radius);padding:24px;transition:border-color .3s;}
   .panel:hover{border-color:rgba(255,255,255,0.12);}
   .panel-title{margin:0 0 16px 0;font-family:'Fredoka',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:2px;color:var(--steel-light);display:flex;align-items:center;gap:10px;}
