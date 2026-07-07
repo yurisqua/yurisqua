@@ -6,7 +6,7 @@
 <title>SUMMER RUSH — 7 jours de stream, 12h par jour</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#07090c;--panel:#10141a;--panel-2:#161b23;--rail:#262c34;
@@ -17,35 +17,42 @@
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--bg);
-    color:var(--text); font-family:'Inter',sans-serif; min-height:100vh;
+    /* Ciel de fin de journée d'été : bleu nuit en haut, chaleur du couchant en bas */
+    background:linear-gradient(180deg,
+      #0a1120 0%,
+      #0f1a2e 30%,
+      #1d2238 55%,
+      #34283b 74%,
+      #4c3134 88%,
+      #5c3a2c 100%) fixed;
+    color:var(--text); font-family:'Nunito',sans-serif; min-height:100vh;
     padding:28px 20px 80px; margin:0; overflow-x:hidden;
   }
-  /* ===== fond animé immersif ===== */
+  /* ===== ambiance été : soleil couchant + brumes légères ===== */
   .bg-fx{position:fixed;inset:0;z-index:-2;overflow:hidden;pointer-events:none;}
-  .bg-fx .blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;animation:drift 22s ease-in-out infinite alternate;}
-  .bg-fx .b1{width:60vw;height:60vw;left:-15vw;top:-25vw;background:radial-gradient(circle,rgba(255,106,61,.16),transparent 65%);}
-  .bg-fx .b2{width:50vw;height:50vw;right:-15vw;top:-10vw;background:radial-gradient(circle,rgba(79,216,255,.12),transparent 65%);animation-delay:-8s;}
-  .bg-fx .b3{width:45vw;height:45vw;left:30vw;bottom:-25vw;background:radial-gradient(circle,rgba(232,184,75,.09),transparent 65%);animation-delay:-15s;}
-  @keyframes drift{from{transform:translate(0,0) scale(1);}to{transform:translate(6vw,4vh) scale(1.15);}}
+  .bg-fx .blob{position:absolute;border-radius:50%;filter:blur(100px);opacity:.6;animation:drift 45s ease-in-out infinite alternate;}
+  .bg-fx .b1{width:75vw;height:55vw;left:5vw;bottom:-30vw;background:radial-gradient(circle,rgba(255,166,84,.24),rgba(255,110,60,.08) 55%,transparent 70%);}
+  .bg-fx .b2{width:55vw;height:45vw;right:-18vw;bottom:-8vw;background:radial-gradient(circle,rgba(255,120,95,.12),transparent 65%);animation-delay:-18s;}
+  .bg-fx .b3{width:60vw;height:40vw;left:-15vw;top:-14vw;background:radial-gradient(circle,rgba(110,160,220,.10),transparent 65%);animation-delay:-30s;}
+  @keyframes drift{from{transform:translate(0,0) scale(1);}to{transform:translate(3vw,-2vh) scale(1.08);}}
+  /* Voile chaud à l'horizon + léger assombrissement des bords, pour un rendu doux */
   .bg-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;
-    background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);
-    background-size:48px 48px;
-    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 30%,transparent 80%);
-    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,black 30%,transparent 80%);
+    background:
+      radial-gradient(ellipse 90% 45% at 50% 108%, rgba(255,160,80,.14), transparent 65%),
+      radial-gradient(ellipse 140% 100% at 50% 50%, transparent 60%, rgba(5,8,14,.5) 100%);
   }
   .wrap{max-width:1340px;margin:0 auto;}
 
   /* ===== topbar ===== */
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-bottom:22px;margin-bottom:26px;border-bottom:var(--border);}
   .brand{display:flex;align-items:center;gap:14px;}
-  .plate{background:linear-gradient(135deg,var(--ember),#ff8f3d);color:#0a0c0f;padding:8px 14px;font-weight:700;border-radius:8px;font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:1px;box-shadow:0 0 24px rgba(255,106,61,.45);animation:platePulse 3s ease-in-out infinite;}
+  .plate{background:linear-gradient(135deg,var(--ember),#ff8f3d);color:#0a0c0f;padding:8px 14px;font-weight:700;border-radius:8px;font-family:'Fredoka',sans-serif;font-size:18px;letter-spacing:1px;box-shadow:0 0 24px rgba(255,106,61,.45);animation:platePulse 3s ease-in-out infinite;}
   @keyframes platePulse{0%,100%{box-shadow:0 0 18px rgba(255,106,61,.35);}50%{box-shadow:0 0 34px rgba(255,106,61,.6);}}
   .brand-text small{color:var(--muted);font-size:12px;letter-spacing:2px;font-weight:600;}
 
   /* ===== bandeau derniers subs ===== */
-  .sub-ticker{display:flex;align-items:center;gap:0;background:var(--panel);border:var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden;}
-  .ticker-label{flex-shrink:0;background:linear-gradient(135deg,#6441a5,#7d5bbe);color:#fff;font-family:'Oswald',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;padding:10px 16px;white-space:nowrap;}
+  .sub-ticker{display:flex;align-items:center;gap:0;background:var(--panel);border:var(--border);border-radius:10px;overflow:hidden;}
+  .ticker-label{flex-shrink:0;background:linear-gradient(135deg,#6441a5,#7d5bbe);color:#fff;font-family:'Fredoka',sans-serif;font-size:11px;font-weight:600;letter-spacing:1.5px;padding:10px 16px;white-space:nowrap;}
   .ticker-viewport{flex:1;overflow:hidden;position:relative;}
   .ticker-viewport::before,.ticker-viewport::after{content:"";position:absolute;top:0;bottom:0;width:40px;z-index:2;pointer-events:none;}
   .ticker-viewport::before{left:0;background:linear-gradient(90deg,var(--panel),transparent);}
@@ -71,7 +78,7 @@
   .countdown-card{position:relative;background:var(--panel);border:var(--border);border-radius:var(--radius);padding:26px 30px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:24px;overflow:hidden;}
   .countdown-card::before{content:"";position:absolute;inset:-2px;background:linear-gradient(120deg,transparent 30%,rgba(79,216,255,.18) 50%,transparent 70%);animation:sheen 6s linear infinite;pointer-events:none;}
   @keyframes sheen{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
-  .countdown-label{font-family:'Oswald',sans-serif;font-size:15px;text-transform:uppercase;color:var(--steel);letter-spacing:2px;}
+  .countdown-label{font-family:'Fredoka',sans-serif;font-size:15px;text-transform:uppercase;color:var(--steel);letter-spacing:2px;}
   .countdown-target{font-size:13px;color:var(--muted);margin-top:6px;}
   .countdown-digits{display:flex;gap:14px;}
   .digit-block{background:var(--panel-2);border:var(--border);border-radius:10px;padding:12px 14px;min-width:82px;text-align:center;position:relative;transition:transform .2s;}
@@ -88,7 +95,7 @@
   .left-column{display:flex;flex-direction:column;gap:24px;}
   .panel{background:var(--panel);border:var(--border);border-radius:var(--radius);padding:24px;transition:border-color .3s;}
   .panel:hover{border-color:rgba(255,255,255,0.12);}
-  .panel-title{margin:0 0 16px 0;font-family:'Oswald',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:2px;color:var(--steel-light);display:flex;align-items:center;gap:10px;}
+  .panel-title{margin:0 0 16px 0;font-family:'Fredoka',sans-serif;font-size:16px;text-transform:uppercase;letter-spacing:2px;color:var(--steel-light);display:flex;align-items:center;gap:10px;}
   .panel-title::before{content:"";width:4px;height:18px;background:linear-gradient(180deg,var(--ember),var(--gold));border-radius:2px;}
   .player-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;}
   .player-head .panel-title{margin:0;}
@@ -99,7 +106,7 @@
   .subs-flex-container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px;}
   .subs-flex-container > div:first-child{flex:1;min-width:200px;}
   .odometer{display:flex;align-items:baseline;gap:10px;margin:12px 0 8px;}
-  .odometer .value{font-family:'Oswald',sans-serif;font-size:64px;font-weight:700;color:var(--ice);line-height:1;text-shadow:0 0 30px rgba(79,216,255,.5);transition:transform .3s;}
+  .odometer .value{font-family:'Fredoka',sans-serif;font-size:64px;font-weight:700;color:var(--ice);line-height:1;text-shadow:0 0 30px rgba(79,216,255,.5);transition:transform .3s;}
   .odometer .value.bump{animation:bump .5s ease;}
   @keyframes bump{0%{transform:scale(1);}40%{transform:scale(1.12);color:var(--gold);}100%{transform:scale(1);}}
   .is-admin .odometer .value{cursor:pointer;}
@@ -116,7 +123,7 @@
   .btn-refresh:hover{background:var(--rail);color:var(--text);transform:rotate(180deg);}
 
   /* ===== boutons ===== */
-  .btn-twitch{background:#6441a5;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;cursor:pointer;font-family:'Inter',sans-serif;}
+  .btn-twitch{background:#6441a5;color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:all .2s;cursor:pointer;font-family:'Nunito',sans-serif;}
   .btn-twitch:hover{background:#7d5bbe;transform:translateY(-2px);box-shadow:0 6px 18px rgba(100,65,165,.4);}
   .btn-twitch.ghost{background:transparent;border:1px solid rgba(255,255,255,0.15);color:var(--steel-light);}
   .btn-twitch.ghost:hover{background:rgba(255,255,255,0.05);box-shadow:none;}
@@ -135,7 +142,7 @@
   .schedule-head .panel-title{margin:0;}
   .schedule-head-right{display:flex;gap:10px;}
   .tab-row{display:flex;gap:8px;border-bottom:1px solid var(--rail);padding-bottom:12px;margin-bottom:20px;}
-  .tab{background:none;border:none;color:var(--steel);font-size:13px;padding:7px 14px;cursor:pointer;border-radius:6px;transition:all .2s;font-family:'Inter',sans-serif;}
+  .tab{background:none;border:none;color:var(--steel);font-size:13px;padding:7px 14px;cursor:pointer;border-radius:6px;transition:all .2s;font-family:'Nunito',sans-serif;}
   .tab:hover{color:var(--text);background:rgba(255,255,255,0.03);}
   .tab.active{color:var(--ice);background:rgba(79,216,255,0.1);font-weight:600;box-shadow:inset 0 0 0 1px rgba(79,216,255,.25);}
   .carousel{position:relative;display:flex;align-items:center;gap:12px;}
@@ -148,7 +155,7 @@
   .car-img{height:130px;background:linear-gradient(135deg,#0b0e13,#141a22);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
   .car-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
   .car-card:hover .car-img img{transform:scale(1.07);}
-  .car-img-fallback{font-family:'Oswald',sans-serif;font-size:24px;font-weight:700;color:rgba(255,255,255,0.05);letter-spacing:3px;}
+  .car-img-fallback{font-family:'Fredoka',sans-serif;font-size:24px;font-weight:700;color:rgba(255,255,255,0.05);letter-spacing:3px;}
   .car-live{position:absolute;top:10px;left:10px;background:var(--danger);color:#fff;font-size:9px;font-weight:bold;text-transform:uppercase;padding:3px 8px;border-radius:4px;letter-spacing:1px;z-index:2;box-shadow:0 0 10px rgba(255,77,77,.5);}
   .car-body{padding:16px;flex:1;display:flex;flex-direction:column;}
   .car-when{font-size:11px;color:var(--gold);font-weight:600;margin-bottom:5px;letter-spacing:.5px;}
@@ -156,7 +163,7 @@
   .car-notes{font-size:12px;color:var(--muted);line-height:1.5;flex:1;}
   .car-admin{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.05);display:none;gap:8px;}
   .is-admin .car-admin{display:flex;}
-  .btn-mini{background:none;border:none;font-size:11px;cursor:pointer;padding:5px 10px;border-radius:5px;font-weight:600;transition:all .15s;font-family:'Inter',sans-serif;}
+  .btn-mini{background:none;border:none;font-size:11px;cursor:pointer;padding:5px 10px;border-radius:5px;font-weight:600;transition:all .15s;font-family:'Nunito',sans-serif;}
   .btn-mini.edit{color:var(--ice);background:rgba(79,216,255,0.08);}
   .btn-mini.edit:hover{background:rgba(79,216,255,0.18);}
   .btn-mini.danger{color:var(--danger);background:rgba(255,77,77,0.08);}
@@ -197,7 +204,7 @@
   /* ===== CTA abonnement / footer ===== */
   .sub-cta{position:relative;margin-top:24px;background:linear-gradient(135deg,rgba(100,65,165,.22),rgba(255,106,61,.1)),var(--panel);border:1px solid rgba(100,65,165,.4);border-radius:var(--radius);padding:38px 24px;text-align:center;overflow:hidden;}
   .sub-cta::before{content:"";position:absolute;inset:-2px;background:linear-gradient(120deg,transparent 35%,rgba(160,120,255,.15) 50%,transparent 65%);animation:sheen 5s linear infinite;pointer-events:none;}
-  .sub-cta h2{margin:0 0 8px;font-family:'Oswald',sans-serif;font-size:26px;letter-spacing:2px;text-transform:uppercase;}
+  .sub-cta h2{margin:0 0 8px;font-family:'Fredoka',sans-serif;font-size:26px;letter-spacing:2px;text-transform:uppercase;}
   .sub-cta p{margin:0 0 20px;color:var(--muted);font-size:14px;}
   .cta-big{font-size:15px;padding:15px 34px;font-weight:700;letter-spacing:1px;border-radius:10px;box-shadow:0 0 26px rgba(100,65,165,.5);animation:platePulse 3s ease-in-out infinite;}
   footer{margin-top:40px;text-align:center;font-size:11px;color:var(--muted);letter-spacing:2px;}
@@ -209,11 +216,11 @@
   @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
   .modal{background:var(--panel);border:var(--border);border-radius:var(--radius);padding:28px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;animation:slideUp .25s cubic-bezier(.22,1,.36,1);box-shadow:0 30px 80px rgba(0,0,0,.6);}
   @keyframes slideUp{from{transform:translateY(24px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-  .modal h3{margin:0 0 20px;font-family:'Oswald',sans-serif;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel-light);}
+  .modal h3{margin:0 0 20px;font-family:'Fredoka',sans-serif;font-size:18px;letter-spacing:1.5px;text-transform:uppercase;color:var(--steel-light);}
   .form-group{margin-bottom:16px;}
   .form-group label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--steel);margin-bottom:6px;font-weight:600;}
   .form-group input[type=text],.form-group input[type=password],.form-group input[type=number],.form-group input[type=datetime-local],.form-group textarea,.form-group select{
-    width:100%;background:var(--panel-2);border:var(--border);border-radius:8px;padding:11px 13px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;
+    width:100%;background:var(--panel-2);border:var(--border);border-radius:8px;padding:11px 13px;color:var(--text);font-size:14px;font-family:'Nunito',sans-serif;outline:none;transition:border-color .2s,box-shadow .2s;
   }
   .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--ice);box-shadow:0 0 0 3px rgba(79,216,255,.12);}
   .form-group textarea{resize:vertical;min-height:70px;}
@@ -256,13 +263,6 @@
       <div class="live-pill"><span class="live-dot"></span> EN DIRECT SUR TWITCH</div>
     </header>
 
-    <div class="sub-ticker" id="sub-ticker" style="display:none;">
-      <div class="ticker-label">💜 DERNIERS SUBS</div>
-      <div class="ticker-viewport">
-        <div class="ticker-track" id="ticker-track"></div>
-      </div>
-    </div>
-
     <div class="admin-banner">🛠️ Mode admin activé — clique sur les éléments pour les modifier. Les changements sont sauvegardés automatiquement.</div>
 
     <section class="about-box" id="about-box" onclick="adminChangeAbout()">
@@ -295,6 +295,13 @@
           </div>
           <div class="player-box">
             <iframe id="twitch-player" src="" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="sub-ticker" id="sub-ticker">
+          <div class="ticker-label">💜 DERNIERS SUBS</div>
+          <div class="ticker-viewport">
+            <div class="ticker-track" id="ticker-track" style="animation:none;"><span class="ticker-item">En attente de la synchronisation StreamElements — les derniers subs et subgifts défileront ici…</span></div>
           </div>
         </div>
 
@@ -662,7 +669,7 @@
         throw new Error("Données manquantes");
       }
     } catch (error) {
-      console.warn("Erreur de fonction Netlify, bascule en mode Local :", error);
+      console.warn("Erreur de l'API, bascule en mode Local :", error);
       statusText.innerText = "Mode Local (Synchro Off)";
       subCountDisplay.style.color = "var(--text)";
       if (indicator) indicator.className = "status-dot offline";
@@ -687,9 +694,10 @@
 
     // Contenu doublé pour une boucle de défilement infinie et fluide
     track.innerHTML = itemsHtml + itemsHtml;
+    // Réactive le défilement (coupé tant que le placeholder est affiché)
+    track.style.animation = "";
     // Vitesse proportionnelle au nombre d'éléments pour rester lisible
     track.style.animationDuration = Math.max(25, recent.length * 3.5) + "s";
-    ticker.style.display = "flex";
   }
 
   /* ================= MODE ADMIN ================= */
