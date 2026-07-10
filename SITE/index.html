@@ -99,7 +99,7 @@
   .panel-title::before{content:"";width:4px;height:18px;background:linear-gradient(180deg,var(--ember),var(--gold));border-radius:2px;}
   .player-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:14px;}
   .player-head .panel-title{margin:0;}
-  .player-box{position:relative;padding-top:56.25%;max-height:min(70vh,640px);background:#000;border-radius:10px;overflow:hidden;border:var(--border);box-shadow:0 10px 40px rgba(0,0,0,.5);}
+  .player-box{position:relative;width:100%;box-sizing:border-box;padding-top:56.25%;max-height:min(70vh,640px) !important;background:#000;border-radius:10px;overflow:hidden;border:var(--border);box-shadow:0 10px 40px rgba(0,0,0,.5);}
   .player-box iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
 
   /* ===== subs ===== */
@@ -776,6 +776,25 @@
   const chatEl = document.getElementById('twitch-chat');
   if (playerEl) playerEl.src = `https://player.twitch.tv/?channel=${DATA.videoChannel}&parent=${host}&muted=false`;
   if (chatEl) chatEl.src = `https://www.twitch.tv/embed/${DATA.chatChannel}/chat?parent=${host}&darkpopout`;
+
+  /* ================= VERROU TAILLE PLAYER (garde-fou anti-débordement) =================
+     Calcule et impose la hauteur du player en pixels, en JS pur, indépendamment
+     de toute CSS externe qui pourrait entrer en conflit (cache, thème d'hébergeur, etc.) */
+  function clampPlayerBox() {
+    const box = document.querySelector('.player-box');
+    if (!box) return;
+    const width = box.clientWidth;
+    if (!width) return;
+    const maxH = Math.min(width * 9 / 16, window.innerHeight * 0.7, 640);
+    box.style.setProperty('height', maxH + 'px', 'important');
+    box.style.setProperty('padding-top', '0px', 'important');
+    box.style.setProperty('max-height', maxH + 'px', 'important');
+  }
+  window.addEventListener('resize', clampPlayerBox);
+  window.addEventListener('load', clampPlayerBox);
+  clampPlayerBox();
+  // Filet de sécurité : re-vérifie périodiquement au cas où le DOM change après coup
+  setInterval(clampPlayerBox, 2000);
 
   /* ================= DESCRIPTION PROJET ================= */
   function renderAbout() {
